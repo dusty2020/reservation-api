@@ -3,10 +3,10 @@
 ## Running locally
 ### Docker
 Build the Docker image
-> docker build -t reservation-api .
+> docker build -t reservation-api
 
 Run
-> docker run -d -p 8080:8080 reservation-a
+> docker run -d -p 8080:8080 reservation-api
 
 ### Maven
 Build
