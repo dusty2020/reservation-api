@@ -15,7 +15,7 @@ public class ReservationDao {
     // key is reservationId
     private Map<String, Reservation> reservationMap;
 
-    // key is flightNumber, value is list of userIds (passengers)
+    // key is flightNumber, value is list of passengers
     private Map<Integer, List<String>> flightMap;
 
     public ReservationDao() {
@@ -28,13 +28,13 @@ public class ReservationDao {
     public Reservation getReservation(String reservationId) {
         // return a new object to simulate a persistence layer where changes to the objects are not automatically
         // persisted
-        var reserveration = reservationMap.get(reservationId);
+        var reservation = reservationMap.get(reservationId);
 
-        if (reserveration == null) {
+        if (reservation == null) {
             return null;
         }
 
-        return reserveration.toBuilder().build();
+        return reservation.toBuilder().build();
     }
 
     public Collection<Reservation> getAllReservations() {
