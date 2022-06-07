@@ -217,6 +217,28 @@ public class ReservationSpecTest {
         // ensure passenger was added to new flight
         assertTrue(db.getPassengersForFlight(4).contains(reservation.getPassengerId()));
 
+    }
+
+    // Verify changing a flight number for a reservation is not allowed if the passenger is already on the new flight.
+    @Test
+    void update_flightChangeFailsIfPassengerAlreadyOnNewFlight() throws JsonProcessingException {
+
+        // get a random reservation for flight 1, book the same passenger on flight 4 and then try
+        // to change the reservation on flight 4 to be flight 1 (passenger is already on flight 1)
+        var reservation = db.getReservationsForFlight(1).iterator().next();
+        reservation.setFlightNumber(4);
+
+        reservation = postTestReservation(reservation).block();
+
+        assertNotNull(reservation);
+        var savedReservation = getTestReservation(reservation.getReservationId()).block();
+
+        assertNotNull(savedReservation);
+        savedReservation.setFlightNumber(1);
+
+        StepVerifier.create(putTestReservation(savedReservation))
+                .expectErrorMatches(throwable -> isHttpStatus(throwable, HttpStatus.PRECONDITION_FAILED))
+                .verify();
 
     }
 

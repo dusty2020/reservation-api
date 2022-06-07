@@ -105,8 +105,8 @@ public class ReservationService {
                     String.format("Flight %s is full", newFlight));
         }
 
-        // if the userId changed make sure the user is not already in the flight
-        if (!oldUserId.equals(newUserId)) {
+        // if the userId changed or the flight changed make sure the user is not already in the flight
+        if (!oldUserId.equals(newUserId) || oldFlight != newFlight) {
             var passengers = db.getPassengersForFlight(newFlight);
 
             if (passengers.contains(newUserId)) {
